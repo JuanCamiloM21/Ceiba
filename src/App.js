@@ -1,8 +1,25 @@
-function App() {
+import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
+import AuthRouter from './hoc/AuthRouter';
+import routers from './routers';
+
+const App = () => {
   return (
-    <div className='App'>
-      <h1>Que diceee</h1>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        { routers.map(route => {
+          if (route.private) {
+            return (
+              <AuthRouter key={route.id}>
+                <Route exact key={route.id} {...route} />
+              </ AuthRouter>
+            )
+          }
+          return <Route exact key={route.id} {...route} />
+        })}
+      </Switch>
+    </BrowserRouter>
   );
 }
 
